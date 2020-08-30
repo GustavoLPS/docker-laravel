@@ -20,5 +20,5 @@ Para acessar o container postgres e gerenciar os seus bancos de dados utilize o 
 - ```psql -U default -w```
 
 Por padrão o usuário do postgres é:  
-> user: default
+> user: default  
 > password: secret
