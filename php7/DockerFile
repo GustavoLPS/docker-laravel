@@ -1,0 +1,28 @@
+FROM php:7.2-fpm
+
+ARG PUID=1000
+ENV PUID ${PUID}
+ARG PGID=1000
+ENV PGID ${PGID}
+RUN groupadd -g ${PGID} laradock && \
+useradd -u ${PUID} -g laradock -m laradock && \
+usermod -p "*" laradock
+
+RUN apt update && apt install -y openssl bash libxml2-dev postgresql-client libpq-dev libpng-dev libaio1 chromium
+
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql soap gd
+
+RUN docker-php-ext-install zip
+
+RUN docker-php-ext-install exif
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN apt-get update && apt-get install -y nodejs && apt-get clean
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN apt-get update && apt-get install -y git
+
+RUN apt-get update && apt-get install -y libxrender-dev libfontconfig
+
+WORKDIR /var/www
